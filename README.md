@@ -1,7 +1,7 @@
 # bl_earth
 Blender add-on to overlay model data on the globe
 
-**bl_earth** is a [**Blender**](www.blender.org) Python addon to visualize global model data on top of a three-dimensional globe. Model data will be handle through **zarr** and theerfore can come in various formats, such as **netCDF** and **grib**.
+**bl_earth** is a [**Blender**](https://www.blender.org) Python addon to visualize global model data on top of a three-dimensional globe. Model data will be handle through **zarr** and theerfore can come in various formats, such as **netCDF** and **grib**.
 
 #### Why bl_earth?
 
