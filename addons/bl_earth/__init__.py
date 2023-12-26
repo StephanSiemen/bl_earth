@@ -17,14 +17,15 @@ import os
 import bpy
 
 def draw_earth_surface():
-    tex_path = bpy.path.relpath(os.path.join(os.path.dirname(__file__), "textures/NASA Earth Textures/"))
+    tex_path = bpy.path.relpath(os.path.join(
+        os.path.dirname(__file__), "textures/NASA Earth Textures/"))
     img_path = os.path.join(tex_path, "earth_color_10K.tif")
     top_path = os.path.join(tex_path, "topography_10k.png")
 
     img = bpy.data.images.load(
         img_path,
         check_existing=True)
-    
+
     # Create a new material
     mat = bpy.data.materials.new(name="Earth Surface")
     # Use nodes
@@ -36,9 +37,9 @@ def draw_earth_surface():
     img_node = mat.node_tree.nodes.new("ShaderNodeTexImage")
     img_node.image = img
 
-    texImage = mat.node_tree.nodes.new('ShaderNodeTexImage')
-    texImage.image = bpy.data.images.load(top_path)
-    texImage.image.colorspace_settings.name = 'Non-Color'
+    tex_image = mat.node_tree.nodes.new('ShaderNodeTexImage')
+    tex_image.image = bpy.data.images.load(top_path)
+    tex_image.image.colorspace_settings.name = 'Non-Color'
 
     bump_shader = mat.node_tree.nodes.new('ShaderNodeBump')
 
@@ -46,8 +47,8 @@ def draw_earth_surface():
 
     mat.node_tree.links.new(img_node.outputs["Color"], bsdf.inputs["Base Color"])
     mat.node_tree.links.new(output.inputs['Displacement'], bump_shader.outputs['Normal'])
-    mat.node_tree.links.new(bump_shader.inputs['Normal'], texImage.outputs['Color'])
-    
+    mat.node_tree.links.new(bump_shader.inputs['Normal'], tex_image.outputs['Color'])
+
 
 class OBJECT_OT_creator_earth(bpy.types.Operator):
     """Create collections based on objects types"""
@@ -57,13 +58,13 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         return True
-    
+
     def execute(self, context):
 
         #clean scene
-        if(True):
-            bpy.ops.object.select_all(action='SELECT')
-            bpy.ops.object.delete(use_global=False)
+        #if(True):
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.object.delete(use_global=False)
 
         earth_cl = 0
         try:
@@ -72,14 +73,14 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
             earth_cl = bpy.data.collections.new("Earth")
             bpy.context.scene.collection.children.link(earth_cl)
 
-        globe = bpy.ops.mesh.primitive_uv_sphere_add(
+        bpy.ops.mesh.primitive_uv_sphere_add(
             segments=16,
             ring_count=8,
             radius=2,
             enter_editmode=False,
             align='WORLD',
             location=(0, 0, 10),
-            scale=(20, 20, 20))
+            scale=(10, 10, 10))
         earth_cl.objects.link(bpy.context.active_object)
         bpy.data.collections["Collection"].objects.unlink(bpy.context.active_object)
         bpy.context.active_object.name = 'Globe'
@@ -93,13 +94,13 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
 
         draw_earth_surface()
 
-        # Add the Sun   
+        # Add the Sun
         bpy.ops.object.light_add(
-            type='SUN', 
-            radius=1, 
-            align='WORLD', 
-            location=(0, 60, 50), 
-            rotation=(1.0472, 1.5708, 2.61799), 
+            type='SUN',
+            radius=1,
+            align='WORLD',
+            location=(0, 60, 50),
+            rotation=(1.0472, 1.5708, 2.61799),
             scale=(1, 1, 1))
         bpy.context.object.data.energy = 8
         bpy.context.object.data.angle = 0
