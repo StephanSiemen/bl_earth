@@ -60,52 +60,63 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
         return True
 
     def execute(self, context):
-
-        #clean scene
-        #if(True):
-        bpy.ops.object.select_all(action='SELECT')
-        bpy.ops.object.delete(use_global=False)
-
-        earth_cl = 0
-        try:
-            earth_cl = bpy.data.collections['Earth']
-        except KeyError:
-            earth_cl = bpy.data.collections.new("Earth")
-            bpy.context.scene.collection.children.link(earth_cl)
-
-        bpy.ops.mesh.primitive_uv_sphere_add(
-            segments=16,
-            ring_count=8,
-            radius=2,
-            enter_editmode=False,
-            align='WORLD',
-            location=(0, 0, 10),
-            scale=(10, 10, 10))
-        earth_cl.objects.link(bpy.context.active_object)
-        bpy.data.collections["Collection"].objects.unlink(bpy.context.active_object)
-        bpy.context.active_object.name = 'Globe'
-
-        bpy.ops.object.modifier_add(type='SUBSURF')
-        bpy.context.object.modifiers["Subdivision"].quality = 6
-        bpy.context.object.modifiers["Subdivision"].levels = 6
-        bpy.context.object.modifiers["Subdivision"].render_levels = 6
-        bpy.ops.object.modifier_apply(modifier="Subdivision")
-        bpy.ops.object.shade_smooth()
-
-        draw_earth_surface()
-
-        # Add the Sun
-        bpy.ops.object.light_add(
-            type='SUN',
-            radius=1,
-            align='WORLD',
-            location=(0, 60, 50),
-            rotation=(1.0472, 1.5708, 2.61799),
-            scale=(1, 1, 1))
-        bpy.context.object.data.energy = 8
-        bpy.context.object.data.angle = 0
-
+        draw_earth()
         return {'FINISHED'}
+
+def draw_earth():
+    #clean scene
+    #if(True):
+    bpy.ops.object.select_all(action='SELECT')
+    bpy.ops.object.delete(use_global=False)
+
+    earth_cl = 0
+    try:
+        earth_cl = bpy.data.collections['Earth']
+    except KeyError:
+        earth_cl = bpy.data.collections.new("Earth")
+        bpy.context.scene.collection.children.link(earth_cl)
+
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        segments=16,
+        ring_count=8,
+        radius=2,
+        enter_editmode=False,
+        align='WORLD',
+        location=(0, 0, 10),
+        scale=(10, 10, 10))
+    earth_cl.objects.link(bpy.context.active_object)
+    bpy.data.collections["Collection"].objects.unlink(bpy.context.active_object)
+    bpy.context.active_object.name = 'Globe'
+
+    bpy.ops.object.modifier_add(type='SUBSURF')
+    bpy.context.object.modifiers["Subdivision"].quality = 6
+    bpy.context.object.modifiers["Subdivision"].levels = 6
+    bpy.context.object.modifiers["Subdivision"].render_levels = 6
+    bpy.ops.object.modifier_apply(modifier="Subdivision")
+    bpy.ops.object.shade_smooth()
+
+    draw_earth_surface()
+
+    # Add the Sun
+    bpy.ops.object.light_add(
+        type='SUN',
+        radius=1,
+        align='WORLD',
+        location=(0, 60, 50),
+        rotation=(1.0472, 1.5708, 2.61799),
+        scale=(1, 1, 1))
+    bpy.context.object.data.energy = 8
+    bpy.context.object.data.angle = 0
+
+    # Add the camera
+    bpy.ops.object.camera_add(
+        enter_editmode=False,
+        align='VIEW',
+        location=(100, 10, 10),
+        rotation=(1.61169, -0.0422343, 1.71535),
+        scale=(1, 1, 1))
+    bpy.context.scene.camera = bpy.context.object
+
 
 def draw_collector_item(self, context):
     row = self.layout.row()
@@ -120,3 +131,9 @@ def unregister():
     bpy.utils.unregister_class(OBJECT_OT_creator_earth)
     menu = bpy.types.VIEW3D_MT_object_context_menu
     menu.remove(draw_collector_item)
+
+#
+#  blender --background --python __init__.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
+#
+if __name__ == "__main__":
+    draw_earth()
