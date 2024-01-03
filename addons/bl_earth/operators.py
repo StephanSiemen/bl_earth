@@ -5,22 +5,37 @@ from bl_earth import earth
 class OBJECT_OT_creator_earth(bpy.types.Operator):
     """Create collections based on objects types"""
     bl_idname = "object.bl_earth_creator"
-    bl_label = "Create globe with overlay"
+    bl_label = "Create globe"
+
+    clear_scene: bpy.props.BoolProperty(
+                        name="Clear current scene?",
+                        default=True)
+    radius: bpy.props.FloatProperty(
+                        name="Radius",
+                        min=0.,  # prevent negative values
+                        default=1000.)
+
 
     @classmethod
     def poll(cls, context):
         return True
+    
+    def invoke(self, context, event):
+        wm = context.window_manager
+        return wm.invoke_props_dialog(self)
 
     def execute(self, context):
-        render_scene()
+
+        render_scene(self.clear_scene)
 
         return {'FINISHED'}
 
-def render_scene():
+def render_scene(clear):
+
     #clean scene
-    #if(True):
-    bpy.ops.object.select_all(action='SELECT')
-    bpy.ops.object.delete(use_global=False)
+    if(clear):
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.object.delete(use_global=False)
 
     # Add Earth - in separate source file
     earth.draw_earth()
