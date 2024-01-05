@@ -31,8 +31,11 @@ def unregister():
     bpy.utils.unregister_class(panels.BlEarth_UI_PT_panel)
     bpy.utils.unregister_class(panels.OBJECT_OT_file_path)
 
+def run():
+    operators.render_scene(clear=True)
+
 #
 #  blender --background --python __init__.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
 #
 if __name__ == "__main__":
-    operators.render_scene(clear=True)
+    run()
