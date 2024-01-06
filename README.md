@@ -36,13 +36,13 @@ Running bl_earth
 
 - Command line and batch
 
-Clone the (**bl_earth**)[https://github.com/StephanSiemen/bl_earth] repo to where you want to run it, install the third-aprty dependencies and excute something like this 
-``` bash
-  git clone https://github.com/StephanSiemen/bl_earth
-  cd bl_earth
-  $BLENDER_PYTHON -m pip install -r requirements.txt
-  blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
-```
+  Clone the [**bl_earth**](https://github.com/StephanSiemen/bl_earth) repo to where you want to run it, install the third-aprty dependencies and excute something like this 
+  ``` bash
+    git clone https://github.com/StephanSiemen/bl_earth
+    cd bl_earth
+    $BLENDER_PYTHON -m pip install -r requirements.txt
+    blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
+  ```
 
 Contributing
 ------------
