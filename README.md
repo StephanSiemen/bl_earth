@@ -28,6 +28,22 @@ When you know where your python interprtor is located (here an example on MacOS)
    /Applications/Blender.app/Contents/Resources/4.0/python/bin/python3.10 -m pip install xarray
 ```
 
+Running bl_earth
+----------------
+
+- Interactivly in Blender
+
+
+- Command line and batch
+
+Clone the (**bl_earth**)[https://github.com/StephanSiemen/bl_earth] repo to where you want to run it, install the third-aprty dependencies and excute something like this 
+``` bash
+  git clone https://github.com/StephanSiemen/bl_earth
+  cd bl_earth
+  $BLENDER_PYTHON -m pip install -r requirements.txt
+  blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
+```
+
 Contributing
 ------------
 
