@@ -18,14 +18,15 @@ Installation
 
 To use **bl_earth** you need to install not only the addon but also some third-party Python packages with the Blender Python interpretor. The latter is slightly more complicated, as you need to call the Blender's python command. To do so you need to know where Blender is installed (depends on your operating system and Blender version). One way to find out is to call this command if you have blender in your PATH:
 
-.. code-block:: bash
+``` bash
    blender -b --python-expr "import sys; print(sys.executable)"
+```
 
 When you know where your python interprtor is located (here an example on MacOS) you can install Python community packgages with
 
-.. code-block:: bash
+``` bash
    /Applications/Blender.app/Contents/Resources/4.0/python/bin/python3.10 -m pip install xarray
-
+```
 
 Contributing
 ------------
