@@ -31,10 +31,10 @@ When you know where your python interprtor is located (here an example on MacOS)
 Running bl_earth
 ----------------
 
-- Interactivly in Blender
+- **Interactivly in Blender**
 
 
-- Command line and batch
+- **Command line and batch**
 
   Clone the [**bl_earth**](https://github.com/StephanSiemen/bl_earth) repo to where you want to run it, install the third-aprty dependencies and excute something like this 
   ``` bash
