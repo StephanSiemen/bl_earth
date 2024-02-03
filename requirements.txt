@@ -1,0 +1,11 @@
+cfgrib
+eccodes
+findlibs
+numpy
+pandas
+pycodestyle
+python-dateutil
+matplotlib
+requests
+setuptools
+xarray
