@@ -20,22 +20,21 @@ from bl_earth import earth
 from bl_earth import panels
 from bl_earth import operators
 
-
 def register():
     bpy.utils.register_class(operators.OBJECT_OT_creator_earth)
+    bpy.utils.register_class(operators.OBJECT_OT_file_path)
     bpy.utils.register_class(panels.BlEarth_UI_PT_panel)
-    bpy.utils.register_class(panels.OBJECT_OT_file_path)
-
+    
 def unregister():
     bpy.utils.unregister_class(operators.OBJECT_OT_creator_earth)
+    bpy.utils.unregister_class(operators.OBJECT_OT_file_path)
     bpy.utils.unregister_class(panels.BlEarth_UI_PT_panel)
-    bpy.utils.unregister_class(panels.OBJECT_OT_file_path)
 
-def run():
-    operators.render_scene(clear=True)
+def run(filename):
+    operators.render_scene(True, filename)
 
 #
 #  blender --background --python __init__.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
 #
 if __name__ == "__main__":
-    run()
+    run(sys.argv[1])

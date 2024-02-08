@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import bpy
+from bpy_extras.io_utils import ImportHelper
 from bl_earth import earth
+from bl_earth import data
 
 class OBJECT_OT_creator_earth(bpy.types.Operator):
     """Create collections based on objects types"""
@@ -25,12 +27,23 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
         return wm.invoke_props_dialog(self)
 
     def execute(self, context):
-
         render_scene(self.clear_scene)
-
         return {'FINISHED'}
 
-def render_scene(clear):
+
+
+class OBJECT_OT_file_path(bpy.types.Operator, ImportHelper):
+    bl_idname = "blearth.invoke_file_chooser"
+    bl_label = "Select file"
+    bl_options = {'REGISTER', 'UNDO'}
+    
+    def execute(self, context):
+        data.read_data(self.filepath)
+        return {'FINISHED'}
+
+
+
+def render_scene(clear, filename=None):
 
     #clean scene
     if(clear):
