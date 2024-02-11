@@ -23,11 +23,13 @@ from bl_earth import operators
 def register():
     bpy.utils.register_class(operators.OBJECT_OT_creator_earth)
     bpy.utils.register_class(operators.OBJECT_OT_file_path)
+    bpy.utils.register_class(operators.OBJECT_OT_create_layer)
     bpy.utils.register_class(panels.BlEarth_UI_PT_panel)
     
 def unregister():
     bpy.utils.unregister_class(operators.OBJECT_OT_creator_earth)
     bpy.utils.unregister_class(operators.OBJECT_OT_file_path)
+    bpy.utils.unregister_class(operators.OBJECT_OT_create_layer)
     bpy.utils.unregister_class(panels.BlEarth_UI_PT_panel)
 
 def run(filename):

@@ -21,26 +21,27 @@ def read_data(filename):
     names = list(ds.data_vars)
 
     for var in names:
-      print(" --------- ",var)
+        print(" --------- ",var)
 
-    #   for i in range(5):
-    #    print("    ... time: "+ds.time.dt.strftime("%B %d, %Y, %r"))
-    #    fig = plt.figure(frameon=False, figsize=[12,8])
-    #    ax = plt.Axes(fig, [0., 0., 1., 1.])
-    #    ax.set_axis_off()
-    #    fig.add_axes(ax)
+        for i in range(1):
+            print("    ... time: "+ds.time.dt.strftime("%B %d, %Y, %r"))
+            fig = plt.figure(frameon=False, figsize=[12,8])
+            ax = plt.Axes(fig, [0., 0., 1., 1.])
+            ax.set_axis_off()
+            fig.add_axes(ax)
 
-    #   #  print(ds[var])
-    #    values = ds[var][i,:,:].values
-    #    plt.imshow(values, interpolation='none')
-    #   #  var.plot()
+            #  print(ds[var])
+            values = ds[var][i,:,:].values
+            plt.imshow(values, interpolation='none')
+            #  var.plot()
 
-    #    outfile = "bl_earth_"+var+"_"+str(i)+".png"
-    #    fig.savefig(outfile,
-    #                bbox_inches='tight',
-    #                transparent=True, 
-    #                pad_inches=0)
-    #    plt.close(fig)
+            outfile = "/tmp/bl_earth_"+var+"_"+str(i)+".png"
+            print(outfile)
+            fig.savefig(outfile,
+                   bbox_inches='tight',
+                   transparent=True, 
+                   pad_inches=0)
+            plt.close(fig)
 
     #    animation[str(i)] = [outfile,var]
 

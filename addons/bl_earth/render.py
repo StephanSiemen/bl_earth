@@ -1,0 +1,59 @@
+import bpy
+from bl_earth import earth
+
+def render_scene(clear, filename=None, radius=10.):
+
+    #clean scene
+    if(clear):
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.object.delete(use_global=False)
+
+    # Add Earth - in separate source file
+    earth.draw_earth(radius)
+
+    # Add the Sun
+    bpy.ops.object.light_add(
+        type='SUN',
+        radius=1,
+        align='WORLD',
+        location=(0, 60, 50),
+        rotation=(1.0472, 1.5708, 2.61799),
+        scale=(1, 1, 1))
+    bpy.context.object.data.energy = 8
+    bpy.context.object.data.angle = 0
+
+    # Add the camera
+    bpy.ops.object.camera_add(
+        enter_editmode=False,
+        align='VIEW',
+        location=(100, 10, 10),
+        rotation=(1.61169, -0.0422343, 1.71535),
+        scale=(1, 1, 1))
+    bpy.context.scene.camera = bpy.context.object
+
+
+def render_layers(clear, radius):
+    texture_file = "/tmp/bl_earth_t2m_0.png"
+
+    overlay = bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
+
+    mat2 = bpy.data.materials.new(name="overlay")
+    mat2.use_nodes = True
+
+    bsdf2 = mat2.node_tree.nodes["Principled BSDF"]
+    texImage2 = mat2.node_tree.nodes.new('ShaderNodeTexImage')
+    texImage2.image = bpy.data.images.load(texture_file)
+    mat2.node_tree.links.new(bsdf2.inputs['Base Color'], texImage2.outputs['Color'])
+    mat2.node_tree.links.new(bsdf2.inputs['Alpha'], texImage2.outputs['Alpha'])
+
+    ob2 = bpy.context.view_layer.objects.active
+
+    # Assign it to object
+    if ob2.data.materials:
+        ob2.data.materials[0] = mat2
+    else:
+        ob2.data.materials.append(mat2)
+
+    # enable transparency for eevee
+    bpy.context.object.active_material.blend_method  = 'BLEND'
+    bpy.context.object.active_material.shadow_method = 'CLIP'

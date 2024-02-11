@@ -37,7 +37,7 @@ def draw_earth_surface():
 
 
 
-def draw_earth():
+def draw_earth(radius):
     earth_cl = 0
     try:
         earth_cl = bpy.data.collections['Earth']
@@ -48,11 +48,11 @@ def draw_earth():
     bpy.ops.mesh.primitive_uv_sphere_add(
         segments=16,
         ring_count=8,
-        radius=2,
+        radius=radius,
         enter_editmode=False,
         align='WORLD',
-        location=(0, 0, 10),
-        scale=(10, 10, 10))
+        location=(0, 0, 0),
+        scale=(1, 1, 1))
     earth_cl.objects.link(bpy.context.active_object)
     bpy.data.collections["Collection"].objects.unlink(bpy.context.active_object)
     bpy.context.active_object.name = 'Globe'

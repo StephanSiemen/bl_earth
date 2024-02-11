@@ -21,3 +21,6 @@ class BlEarth_UI_PT_panel(bpy.types.Panel):
         col.separator()
         col.label(text="Select data set")
         col.operator(operators.OBJECT_OT_file_path.bl_idname, text="Select file ...")
+        col.separator()
+        col.label(text="Select variable")
+        col.operator(operators.OBJECT_OT_create_layer.bl_idname, text="Select variable")
