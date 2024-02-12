@@ -2,7 +2,7 @@
 #   Script to run bl_earth in batch mode
 #
 #    Example:
-#      blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
+#      blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data.grib
 #
 
 #
@@ -17,4 +17,4 @@ sys.path.append(os.path.join(os.path.dirname(__file__),'addons'))
 #
 import bl_earth
 
-bl_earth.run()
+bl_earth.run(sys.argv[-1])

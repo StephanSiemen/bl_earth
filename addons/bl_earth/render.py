@@ -1,7 +1,7 @@
 import bpy
 from bl_earth import earth
 
-def render_scene(clear, filename=None, radius=10.):
+def render_scene(clear, radius=10.):
 
     #clean scene
     if(clear):
@@ -26,13 +26,13 @@ def render_scene(clear, filename=None, radius=10.):
     bpy.ops.object.camera_add(
         enter_editmode=False,
         align='VIEW',
-        location=(100, 10, 10),
+        location=(90, 0, 0),
         rotation=(1.61169, -0.0422343, 1.71535),
         scale=(1, 1, 1))
     bpy.context.scene.camera = bpy.context.object
 
 
-def render_layers(clear, radius):
+def render_layers(clear, radius, filename=None):
     texture_file = "/tmp/bl_earth_t2m_0.png"
 
     overlay = bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)

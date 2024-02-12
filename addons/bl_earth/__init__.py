@@ -19,6 +19,7 @@ import bpy
 from bl_earth import earth
 from bl_earth import panels
 from bl_earth import operators
+from bl_earth import render
 
 def register():
     bpy.utils.register_class(operators.OBJECT_OT_creator_earth)
@@ -33,10 +34,11 @@ def unregister():
     bpy.utils.unregister_class(panels.BlEarth_UI_PT_panel)
 
 def run(filename):
-    operators.render_scene(True, filename)
+    render.render_scene(True)
+    render.render_layers(False, 12, filename)
 
 #
 #  blender --background --python __init__.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
 #
 if __name__ == "__main__":
-    run(sys.argv[1])
+    run(sys.argv[-1])
