@@ -62,7 +62,7 @@ This modeule was inspired by many other projects like
 - [blendernc](https://blendernc.readthedocs.io)
 
 
-Acknoledgements
+Acknowledgement
 ---------------
 
 The used texture and topolgies orginate from NASA's Visible Earth and used according to [their usage policy](https://visibleearth.nasa.gov/image-use-policy). The files itself were provided as part of [this Blender Guru's YouTube tutorial](https://www.youtube.com/watch?v=0YZzHn0iz8U).
