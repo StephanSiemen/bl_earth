@@ -41,7 +41,7 @@ Running bl_earth
     git clone https://github.com/StephanSiemen/bl_earth
     cd bl_earth
     $BLENDER_PYTHON -m pip install -r requirements.txt
-    blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
+    blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data.grib
   ```
 
 Contributing
@@ -60,6 +60,12 @@ Inspiration
 This modeule was inspired by many other projects like 
 
 - [blendernc](https://blendernc.readthedocs.io)
+
+
+Acknoledgements
+---------------
+
+The used texture and topolgies orginate from NASA's Visible Earth and used according to [their usage policy](https://visibleearth.nasa.gov/image-use-policy). The files itself were provided as part of [this Blender Guru's YouTube tutorial](https://www.youtube.com/watch?v=0YZzHn0iz8U).
 
 ---
 
