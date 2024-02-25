@@ -16,7 +16,7 @@ Learn more about *bl_earth* in the official documentation at ... COMING SOON!
 Installation
 ------------
 
-To use **bl_earth** you need to install not only the addon itself but also some third-party Python packages with the Blender Python interpretor. The latter is slightly more complicated, as you need to call the Python executable which comes with Blender. To do so you need to know where Blender is installed (depends on your operating system and Blender version). One way to find out is to call this command if you have blender in your PATH:
+To use **bl_earth** interactivly in the Blender UI you need to install the addon, through Edit > Preferences > Add-ons. To use it in batch mode, you only need to clone the GitHub repositry itself. Additionally some third-party Python packages need to be installed with the Blender Python interpretor. The latter is slightly more complicated, as you need to call the Python executable which comes with Blender. To do so you need to know where Blender is installed (depends on your operating system and Blender version). One way to find out is to call this command if you have blender in your PATH:
 
 ``` bash
    blender -b --python-expr "import sys; print(sys.executable)"
@@ -33,6 +33,7 @@ Running bl_earth
 
 - **Interactivly in Blender**
 
+Aftre installing and enabling the **bl_earth** add-on, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
 
 - **Command line and batch**
 
@@ -43,6 +44,7 @@ Running bl_earth
     $BLENDER_PYTHON -m pip install -r requirements.txt
     blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data.grib
   ```
+  Where $BLENDER_PYTHON is pointing to the Python interpretor which comes with Blender (see above).
 
 Contributing
 ------------

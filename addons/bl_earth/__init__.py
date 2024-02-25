@@ -38,7 +38,7 @@ def run(filename):
     render.render_layers(False, 12, filename)
 
 #
-#  blender --background --python __init__.py -noaudio -E 'CYCLES' -f 1 -F 'PNG'
+#  blender --background --python __init__.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data.grib
 #
 if __name__ == "__main__":
     run(sys.argv[-1])

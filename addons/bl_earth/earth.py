@@ -3,6 +3,7 @@ import bpy
 
 
 def draw_earth_surface():
+    """Render Earth surface by mapping material on globe."""
     tex_path = bpy.path.relpath(os.path.join(
         os.path.dirname(__file__), "textures/NASA Earth Textures/"))
     img_path = os.path.join(tex_path, "earth_color_10K.tif")
@@ -38,6 +39,7 @@ def draw_earth_surface():
 
 
 def draw_earth(radius):
+    """Create Earth with specified radius."""
     earth_cl = 0
     try:
         earth_cl = bpy.data.collections['Earth']
