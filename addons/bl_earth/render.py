@@ -1,4 +1,5 @@
 import bpy
+import math
 from bl_earth import earth
 
 def render_scene(clear, radius=10.):
@@ -26,8 +27,8 @@ def render_scene(clear, radius=10.):
     bpy.ops.object.camera_add(
         enter_editmode=False,
         align='VIEW',
-        location=(90, 0, 0),
-        rotation=(1.61169, -0.0422343, 1.71535),
+        location=(60, 0, 20),
+        rotation=(math.radians(70.), math.radians(2.), math.radians(90.)),
         scale=(1, 1, 1))
     bpy.context.scene.camera = bpy.context.object
 
