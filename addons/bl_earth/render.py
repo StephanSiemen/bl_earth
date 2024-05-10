@@ -2,7 +2,7 @@ import bpy
 import math
 from bl_earth import earth
 
-def render_scene(clear, radius=10.):
+def render_scene(clear, radius=10., animate_globe=True):
 
     #clean scene
     if(clear):
@@ -11,6 +11,12 @@ def render_scene(clear, radius=10.):
 
     # Add Earth - in separate source file
     earth.draw_earth(radius)
+
+    if animate_globe:
+        bpy.context.object.rotation_euler = 0.0, 0.0, 0.0
+        bpy.context.object.keyframe_insert('rotation_euler', frame=1)
+        bpy.context.object.rotation_euler = 0.0, 0.0, -math.radians(360.0)
+        bpy.context.object.keyframe_insert('rotation_euler', frame=250)
 
     # Add the Sun
     bpy.ops.object.light_add(
@@ -31,6 +37,9 @@ def render_scene(clear, radius=10.):
         rotation=(math.radians(70.), math.radians(2.), math.radians(90.)),
         scale=(1, 1, 1))
     bpy.context.scene.camera = bpy.context.object
+
+    bpy.context.space_data.shading.type = 'MATERIAL'
+
 
 
 def render_layers(clear, radius, filename=None):

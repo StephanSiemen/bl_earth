@@ -12,6 +12,9 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
     clear_scene: bpy.props.BoolProperty(
                         name="Clear current scene?",
                         default=True)
+    animate_globe : bpy.props.BoolProperty(
+                        name="Rotate the globe?",
+                        default=True)
     radius: bpy.props.FloatProperty(
                         name="Radius",
                         min=0.,  # prevent negative values
@@ -27,7 +30,7 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
         return wm.invoke_props_dialog(self)
 
     def execute(self, context):
-        render.render_scene(self.clear_scene,self.radius)
+        render.render_scene(self.clear_scene,self.radius,self.animate_globe)
         return {'FINISHED'}
 
 class OBJECT_OT_create_layer(bpy.types.Operator):
