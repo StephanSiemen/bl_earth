@@ -23,8 +23,8 @@ def render_scene(clear, radius=10., animate_globe=True):
         type='SUN',
         radius=1,
         align='WORLD',
-        location=(0, 60, 50),
-        rotation=(1.0472, 1.5708, 2.61799),
+        location=(50, -10, 50),
+        rotation=(math.radians(70.0), math.radians(7.0), math.radians(100.0)),
         scale=(1, 1, 1))
     bpy.context.object.data.energy = 8
     bpy.context.object.data.angle = 0
@@ -33,8 +33,8 @@ def render_scene(clear, radius=10., animate_globe=True):
     bpy.ops.object.camera_add(
         enter_editmode=False,
         align='VIEW',
-        location=(60, 0, 20),
-        rotation=(math.radians(70.), math.radians(2.), math.radians(90.)),
+        location=(60, 0, 22),
+        rotation=(math.radians(70.), 0, math.radians(90.)),
         scale=(1, 1, 1))
     bpy.context.scene.camera = bpy.context.object
 
