@@ -2,7 +2,27 @@ import bpy
 import math
 from bl_earth import earth
 
+frame_text = None
+
+# Function to add text 
+def add_text(text, location, size):
+    bpy.ops.object.text_add(location=location)
+    text_obj = bpy.context.object
+    text_obj.data.body = text
+    text_obj.data.size = size
+    text_obj.data.align_x = 'RIGHT'
+    text_obj.data.align_y = 'TOP'
+    text_obj.data.body = 'Frame: 1'
+    return text_obj
+
+def recalculate_text(scene):
+    global frame_text
+    frame_text.data.body = 'Frame: ' + str(scene.frame_current)
+    # print(scene.frame_current)
+
 def render_scene(clear, radius=10., animate_globe=True):
+
+    global frame_text
 
     #clean scene
     if(clear):
@@ -37,8 +57,15 @@ def render_scene(clear, radius=10., animate_globe=True):
         rotation=(math.radians(70.), 0, math.radians(90.)),
         scale=(1, 1, 1))
     bpy.context.scene.camera = bpy.context.object
+    cam = bpy.context.object
 
-    bpy.context.space_data.shading.type = 'MATERIAL'
+    frame_text = add_text("Frame: 1", (-2., 2., -10.), 0.3)
+    frame_text.parent = cam
+
+    # bpy.context.space_data.shading.type = 'MATERIAL'
+
+    bpy.app.handlers.frame_change_post.append(recalculate_text)
+
 
 
 
