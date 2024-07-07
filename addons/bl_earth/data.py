@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def read_data(filename):
+    """Read data through cfgrib."""
     print("Python:  ", sys.executable)
     print("  path:  ", sys.path)
     print("NumPy:   ", np.__version__)
@@ -30,18 +31,17 @@ def read_data(filename):
             ax.set_axis_off()
             fig.add_axes(ax)
 
-            #  print(ds[var])
+            # #  print(ds[var])
             values = ds[var][i,:,:].values
             plt.imshow(values, interpolation='none')
-            #  var.plot()
 
             outfile = "/tmp/bl_earth_"+var+"_"+str(i)+".png"
             print(outfile)
-            fig.savefig(outfile,
-                   bbox_inches='tight',
-                   transparent=True, 
-                   pad_inches=0)
-            plt.close(fig)
+            # fig.savefig(outfile,
+            #        bbox_inches='tight',
+            #        transparent=True, 
+            #        pad_inches=0)
+            #plt.close(fig)
 
     #    animation[str(i)] = [outfile,var]
 
@@ -52,4 +52,3 @@ def read_data(filename):
 #
 if __name__ == "__main__":
     read_data(sys.argv[1])
-
