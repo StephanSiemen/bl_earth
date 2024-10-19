@@ -16,6 +16,12 @@ bl_info = {
 #import os
 import bpy
 
+import sys, site
+
+user_site_pkgs = site.getusersitepackages()
+if user_site_pkgs not in sys.path:
+    sys.path.append(user_site_pkgs)
+
 from bl_earth import earth
 from bl_earth import panels
 from bl_earth import operators
