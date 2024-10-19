@@ -25,7 +25,7 @@ To use **bl_earth** interactivly in the Blender UI you need to install the addon
 When you know where your python interprtor is located (here an example on MacOS) you can install Python community packgages with
 
 ``` bash
-   /Applications/Blender.app/Contents/Resources/4.1/python/bin/python3.11 -m pip install -r requirements.txt
+   /Applications/Blender.app/Contents/Resources/4.2/python/bin/python3.11 -m pip install -r requirements.txt
 ```
 
 Running bl_earth
