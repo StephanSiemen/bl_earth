@@ -14,7 +14,7 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
                         default=True)
     animate_globe : bpy.props.BoolProperty(
                         name="Rotate the globe?",
-                        default=True)
+                        default=True) # type: ignore
     radius: bpy.props.FloatProperty(
                         name="Radius",
                         min=0.,  # prevent negative values
@@ -35,11 +35,14 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
 
 #####################################################
 
+bl_options = []
+
 class OBJECT_OT_create_layer(bpy.types.Operator):
     """Create data overlays on the globe"""
     bl_idname = "object.bl_earth_layer"
     bl_label = "Create layer"
 
+    
     clear_scene: bpy.props.BoolProperty(
                         name="Clear current layers?",
                         default=False)
@@ -47,6 +50,11 @@ class OBJECT_OT_create_layer(bpy.types.Operator):
                         name="Height",
                         min=0.,  # prevent negative values
                         default=10.)
+    variable: bpy.props.EnumProperty(
+                        name="Variable",
+                        description="Choose a variable",
+                        items=lambda self, context: bl_options
+    )
 
     @classmethod
     def poll(cls, context):
@@ -57,6 +65,7 @@ class OBJECT_OT_create_layer(bpy.types.Operator):
         return wm.invoke_props_dialog(self)
 
     def execute(self, context):
+        self.report({'INFO'}, f"bl_earth - Variable selected: {self.variable}")
         render.render_layers(self.clear_scene, self.radius)
         return {'FINISHED'}
 
@@ -69,5 +78,7 @@ class OBJECT_OT_file_path(bpy.types.Operator, ImportHelper):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        data.read_data(self.filepath)
+        global bl_options 
+        input = data.read_data(self.filepath)
+        bl_options = input["options"]
         return {'FINISHED'}
