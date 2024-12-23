@@ -34,12 +34,12 @@ Running bl_earth
 
 - **Interactivly in Blender**
 
-After installing and enabling the **bl_earth** add-on, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
+  After installing and enabling the **bl_earth** add-on, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
 
-If you checked out this repo and want to run it locally from code you should go to the git folder and set the path by setting 
-``` bash
-   export BLENDER_SYSTEM_SCRIPTS=$PWD
-```
+  If you checked out this repo and want to run it locally from code you should go to the git folder and set the path by setting 
+  ``` bash
+    export BLENDER_SYSTEM_SCRIPTS=$PWD
+  ```
 
 - **Command line and batch**
 
