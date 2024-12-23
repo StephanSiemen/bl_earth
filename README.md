@@ -20,12 +20,13 @@ To use **bl_earth** interactivly in the Blender UI you need to install the addon
 
 ``` bash
    blender -b --python-expr "import sys; print(sys.executable)"
+   export BLENDER_PYTHON=<output path from above>
 ```
 
 When you know where your python interprtor is located (here an example on MacOS) you can install Python community packgages with
 
 ``` bash
-   /Applications/Blender.app/Contents/Resources/4.2/python/bin/python3.11 -m pip install -r requirements.txt
+   /Applications/Blender.app/Contents/Resources/4.3/python/bin/python3.11 -m pip install -r requirements.txt
 ```
 
 Running bl_earth
@@ -33,7 +34,9 @@ Running bl_earth
 
 - **Interactivly in Blender**
 
-Aftre installing and enabling the **bl_earth** add-on, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
+After installing and enabling the **bl_earth** add-on, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
+
+If you checked out this repo, you can set the path to the local code by setting *Preference > File Paths > Script Directories* to this directory. Under *Add-ons* refresh local paths to see the add-on.
 
 - **Command line and batch**
 
