@@ -26,6 +26,7 @@ from bl_earth import earth
 from bl_earth import panels
 from bl_earth import operators
 from bl_earth import render
+from bl_earth import data
 
 def register():
     bpy.utils.register_class(operators.OBJECT_OT_creator_earth)
@@ -43,6 +44,7 @@ def unregister():
 
 def run(filename):
     render.render_scene(True)
+    data.read_data(filename)
     # render.render_layers(False, 12, filename)
 
 #

@@ -32,28 +32,30 @@ def read_data(filename):
 
         print(f"Attributes of variable '{var}':", ds[var].attrs)
 
+    for var_name, da in ds.data_vars.items():
+       if 'step' in da.dims:
+            for time in da.step:
+                print(f">>>>>>>>>>>>>>>>>>>>>>>>>>> {var_name}")
+                fc_step = str((time.values / 3600000000000.).astype(int)).zfill(3)
+                # Select the data for the current time
+                data_slice = da.sel(step=time)
+            
+                # Create the plot
+                fig = plt.figure(frameon=False, figsize=(10, 6))
+                plt.axis('off')
+                plt.title('')
+                data_slice.plot(cmap=plt.cm.coolwarm, add_colorbar=False)
+            
+                # Save the plot
+                filename = f"/tmp/bl_earth_{var_name}_{fc_step}.png"
+                plt.savefig(filename, dpi=300, bbox_inches='tight',transparent=True, pad_inches=0)
+                plt.close()
+            
+    #  animation[str(i)] = [outfile,var]
 
-        # for i in range(1):
-        #     print("    ... time: "+ds.time.dt.strftime("%B %d, %Y, %r"))
-        #     fig = plt.figure(frameon=False, figsize=[12,8])
-        #     ax = plt.Axes(fig, [0., 0., 1., 1.])
-        #     ax.set_axis_off()
-        #     fig.add_axes(ax)
-
-        #     # #  print(ds[var])
-        #     values = ds[var][i,:,:].values
-        #     plt.imshow(values, interpolation='none')
-
-        #     outfile = "/tmp/bl_earth_"+var+"_"+str(i)+".png"
-        #     print(outfile)
-            # fig.savefig(outfile,
-            #        bbox_inches='tight',
-            #        transparent=True, 
-            #        pad_inches=0)
-            #plt.close(fig)
-
-    #    animation[str(i)] = [outfile,var]
-
+        #  values = ds[var][i,:,:].values
+        #  plt.imshow(values, interpolation='none')
+  
     animation["options"] = options
     return animation
 
