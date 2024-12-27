@@ -44,8 +44,8 @@ def unregister():
 
 def run(filename):
     render.render_scene(True)
-    data.read_data(filename)
-    # render.render_layers(False, 12, filename)
+    layers = data.read_data(filename)
+    render.render_layers(False, 12, layers)
 
 #
 #  blender --background --python __init__.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data.grib

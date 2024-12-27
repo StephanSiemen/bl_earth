@@ -69,8 +69,10 @@ def render_scene(clear, radius=10., animate_globe=True):
 
 
 
-def render_layers(clear, radius, filename=None):
-    texture_file = "/tmp/bl_earth_t2m_0.png"
+def render_layers(clear, radius, layers):
+    print("******************** render layers *******************")
+
+    texture_file = layers['t2m']['000']
 
     overlay = bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
 
@@ -92,5 +94,5 @@ def render_layers(clear, radius, filename=None):
         ob2.data.materials.append(mat2)
 
     # enable transparency for eevee
-    bpy.context.object.active_material.blend_method  = 'BLEND'
-    bpy.context.object.active_material.shadow_method = 'CLIP'
+    # bpy.context.object.active_material.blend_method  = 'BLEND'
+    # bpy.context.object.active_material.shadow_method = 'CLIP'
