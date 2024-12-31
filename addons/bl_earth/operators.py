@@ -33,15 +33,9 @@ class OBJECT_OT_creator_earth(bpy.types.Operator):
         render.render_scene(self.clear_scene,self.radius,self.animate_globe)
         return {'FINISHED'}
 
-
 #####################################################
 
 variables = []
-
-# def get_collections(self, context):
-#     global variables
-#     print("*********>>>>>>>>>>>>>>>>>>>>>" + str(variables))
-#     return variables
 
 class OBJECT_OT_create_layer(bpy.types.Operator):
     """Create data overlays on the globe"""
@@ -59,11 +53,7 @@ class OBJECT_OT_create_layer(bpy.types.Operator):
     variable: bpy.props.EnumProperty(
                         name="Variable",
                         description="Choose a variable",
-                        items=lambda self, context: variables['options']
-                        # items={
-                        #     ('OPT_tp', 'tp - Total precipitation in m', 'Total precipitation in m'),
-                        #     ('OPT_t2m', 't2m - 2 metre temperature in K', '2 metre temperature in K')}
-                            )
+                        items=lambda self, context: variables['options'])
 
     @classmethod
     def poll(cls, context):
@@ -97,6 +87,6 @@ class OBJECT_OT_file_path(bpy.types.Operator, ImportHelper):
     def execute(self, context):
         global variables 
         variables = data.read_data(self.filepath)
-        print(">>>>>>>>>>>" + self.filepath)
-        print("*********************^^^^^^^^^^^^^^^^^^^^*22222" + str(variables))
+        # print(">>>>>>>>>>>" + self.filepath)
+        # print("*********************^^^^^^^^^^^^^^^^^^^^*22222" + str(variables))
         return {'FINISHED'}

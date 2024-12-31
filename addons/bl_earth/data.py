@@ -57,12 +57,11 @@ def read_data(filename):
         #  values = ds[var][i,:,:].values
         #  plt.imshow(values, interpolation='none')
   
-    #plt.close()
     fc_data["options"] = options
-    print("*********************************")
-    print(fc_data)
+    # print("*********************************")
+    # print(fc_data)
     del ds
-    print("*********************************")
+    # plt.close()   ### crashes Blender UI if not commented out
     return fc_data
 
 #
