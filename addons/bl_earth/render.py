@@ -67,31 +67,52 @@ def render_scene(clear, radius=10., animate_globe=True):
     bpy.app.handlers.frame_change_post.append(recalculate_text)
 
 
+def create_material(name):
+    mat = bpy.data.materials.new(name=name)
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+
+    tex_node = nodes.new(type='ShaderNodeTexImage')
+    bsdf_node = nodes.new(type='ShaderNodeBsdfPrincipled')
+    output_node = nodes.new(type='ShaderNodeOutputMaterial')
+
+    links = mat.node_tree.links
+    links.new(tex_node.outputs['Color'], bsdf_node.inputs['Base Color'])
+    links.new(bsdf_node.outputs['BSDF'], output_node.inputs['Surface'])
+
+    return mat, tex_node
 
 
 def render_layers(clear, radius, layers):
     print("******************** render layers *******************")
 
-    texture_file = layers['t2m']['000']
+    material, texture_node = create_material("Animated_Material")
+
+
+
+    for n, step in enumerate(layers['t2m']):
+        print("---> Step: ", step, " Frame: ", n*5)
+        print("---> Texture file: ", layers['t2m'][step])
+
+        frame = n*5
+
+        texture_node.image = bpy.data.images.load(layers['t2m'][step])
+        texture_node.image_user.frame_duration = 1
+        texture_node.image_user.frame_start = frame
+        texture_node.image_user.frame_offset = 0
+        texture_node.image_user.use_auto_refresh = True
+        texture_node.image_user.keyframe_insert("frame_offset", frame=frame)
+
 
     overlay = bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
-
-    mat2 = bpy.data.materials.new(name="overlay")
-    mat2.use_nodes = True
-
-    bsdf2 = mat2.node_tree.nodes["Principled BSDF"]
-    texImage2 = mat2.node_tree.nodes.new('ShaderNodeTexImage')
-    texImage2.image = bpy.data.images.load(texture_file)
-    mat2.node_tree.links.new(bsdf2.inputs['Base Color'], texImage2.outputs['Color'])
-    mat2.node_tree.links.new(bsdf2.inputs['Alpha'], texImage2.outputs['Alpha'])
-
-    ob2 = bpy.context.view_layer.objects.active
+    obj = bpy.context.view_layer.objects.active
 
     # Assign it to object
-    if ob2.data.materials:
-        ob2.data.materials[0] = mat2
+    if obj.data.materials:
+        obj.data.materials[0] = material
     else:
-        ob2.data.materials.append(mat2)
+        obj.data.materials.append(material)
 
     # enable transparency for eevee
     # bpy.context.object.active_material.blend_method  = 'BLEND'
