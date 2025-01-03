@@ -1,3 +1,4 @@
+ecmwf-opendata
 cfgrib
 eccodes
 findlibs
