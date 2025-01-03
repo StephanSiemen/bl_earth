@@ -23,9 +23,11 @@ To use **bl_earth** interactivly in the Blender UI you need to install the addon
    export BLENDER_PYTHON=<output path from above>
 ```
 
-When you know where your python interprtor is located (here an example on MacOS) you can install Python community packgages with
+When you know where your python interpretor is located (here an example on MacOS) you can install Python community packgages with
 
 ``` bash
+   git clone https://github.com/StephanSiemen/bl_earth
+   cd bl_earth
    /Applications/Blender.app/Contents/Resources/4.3/python/bin/python3.11 -m pip install -r requirements.txt
 ```
 
@@ -40,17 +42,18 @@ Running bl_earth
   ``` bash
     export BLENDER_SYSTEM_SCRIPTS=$PWD
   ```
+  After that you start up Blender and enable the addon under Edit - Preferences, searching for 'earth':
+  ![screenshot enabling the addon](docs/images/bl_earth_enable_addon.png)
+  When enabled you can find the **bl_earth** menu on the sidebar tyoing 'n' in the main window:
+  ![screenshot on blearth menu](docs/images/bl_earth_menu.png)
 
 - **Command line and batch**
 
   Clone the [**bl_earth**](https://github.com/StephanSiemen/bl_earth) repo to where you want to run it, install the third-aprty dependencies and excute something like this 
   ``` bash
-    git clone https://github.com/StephanSiemen/bl_earth
-    cd bl_earth
-    $BLENDER_PYTHON -m pip install -r requirements.txt
-    blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data.grib
+    blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data/ecmwf_forecast.grib2 
   ```
-  Where $BLENDER_PYTHON is pointing to the Python interpretor which comes with Blender (see above).
+  Where $BLENDER_PYTHON is pointing to the Python interpretor which comes with Blender (see above). To retrieve the example data set, run '$BLENDER_PYTHON retrieve_ecmwf_fc.py' in the 'data' folder.
 
 Contributing
 ------------
