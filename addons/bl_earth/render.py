@@ -2,27 +2,26 @@ import bpy
 import math
 from bl_earth import earth
 
-frame_text = None
 
 # Function to add text 
 def add_text(text, location, size):
     bpy.ops.object.text_add(location=location)
     text_obj = bpy.context.object
+    text_obj.name = "Frame_Text"
     text_obj.data.body = text
     text_obj.data.size = size
     text_obj.data.align_x = 'RIGHT'
     text_obj.data.align_y = 'TOP'
-    text_obj.data.body = 'Frame: 1'
     return text_obj
 
 def recalculate_text(scene):
-    global frame_text
-    frame_text.data.body = 'Frame: ' + str(scene.frame_current)
-    # print(scene.frame_current)
+    # Find the text object by name
+    text_obj = bpy.data.objects.get("Frame_Text")
+    if text_obj and text_obj.type == 'FONT':
+        # Update the text body with the current frame number
+        text_obj.data.body = f'Frame: {scene.frame_current}'
 
 def render_scene(clear, radius=10., animate_globe=True):
-
-    global frame_text
 
     #clean scene
     if(clear):
@@ -88,8 +87,6 @@ def render_layers(clear, radius, layers):
     print("******************** render layers *******************")
 
     material, texture_node = create_material("Animated_Material")
-
-
 
     for n, step in enumerate(layers['t2m']):
         print("---> Step: ", step, " Frame: ", n*5)
