@@ -4,34 +4,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def read_data(filename):
-    """Read data through cfgrib."""
-    print("Python:  ", sys.executable)
-    print("  path:  ", sys.path)
-    print("NumPy:   ", np.__version__)
-    print("xarray:  ", xr.__version__)
+    """Read data through cfgrib.
+    
+    Args:
+        filename (str): Path to the GRIB file. 
+    """
+
+    print("++++++++ bl_eart - data.py > "+filename+"++++++++++++")
+    print("  Python:  ", sys.executable)
+    #print("    path:  ", sys.path)
+    print("  NumPy:   ", np.__version__)
+    print("  xarray:  ", xr.__version__)
 
     fc_data = dict()
-
-    print("------------------- "+str(filename)+" ----------------")
 
     ds = xr.open_dataset(filename, engine="cfgrib")
     # ds = xr.open_mfdataset(filename, combine='nested', concat_dim='time',
     #                  engine='cfgrib',backend_kwargs={'indexpath': ''})
 
-    #fc_data['ds'] = ds
-
-    #a list with the variable names of your xarray.Dataset
+    # Create option list for variables in file
     names = list(ds.data_vars)
-
     options = []
 
     for var in names:
-        print(" --------- ",var)
         option_tuple = (f'OPT_{var}', f"{var} - {ds[var].attrs['long_name']} in {ds[var].attrs['units']}", f"{ds[var].attrs['long_name']} in {ds[var].attrs['units']}")
         options.append(option_tuple)
-
         print(f"Attributes of variable '{var}':", ds[var].attrs)
 
+    # Go through variables an plot each variable in separate files
     for var_name, da in ds.data_vars.items():
        steps = dict()
        if 'step' in da.dims:
@@ -58,8 +58,8 @@ def read_data(filename):
         #  plt.imshow(values, interpolation='none')
   
     fc_data["options"] = options
-    # print("*********************************")
-    # print(fc_data)
+    print("*********************************")
+    print(fc_data)
     del ds
     # plt.close()   ### crashes Blender UI if not commented out
     return fc_data

@@ -7,7 +7,7 @@ from bl_earth import earth
 def add_text(text, location, size):
     bpy.ops.object.text_add(location=location)
     text_obj = bpy.context.object
-    text_obj.name = "Frame_Text"
+    text_obj.name = "Text_FrameCounter"
     text_obj.data.body = text
     text_obj.data.size = size
     text_obj.data.align_x = 'RIGHT'
@@ -16,12 +16,20 @@ def add_text(text, location, size):
 
 def recalculate_text(scene):
     # Find the text object by name
-    text_obj = bpy.data.objects.get("Frame_Text")
+    text_obj = bpy.data.objects.get("Text_FrameCounter")
     if text_obj and text_obj.type == 'FONT':
         # Update the text body with the current frame number
         text_obj.data.body = f'Frame: {scene.frame_current}'
 
 def render_scene(clear, radius=10., animate_globe=True):
+    """
+    Create an intial scene with the Earth and the Sun.
+
+    :param clear: Clear the scene before rendering
+    :param radius: Radius of the Earth
+    :param animate_globe: Animate the globe rotation
+    :return: None
+    """
 
     #clean scene
     if(clear):
@@ -60,13 +68,18 @@ def render_scene(clear, radius=10., animate_globe=True):
 
     frame_text = add_text("Frame: 1", (-2., 2., -10.), 0.3)
     frame_text.parent = cam
-
-    # bpy.context.space_data.shading.type = 'MATERIAL'
-
     bpy.app.handlers.frame_change_post.append(recalculate_text)
 
 
 def create_material(name):
+    """
+    Create a new material with a texture node and a principled BSDF shader.
+
+    :param name: Name of the material
+    :return: Material and texture node
+    """
+
+    # Create a new material
     mat = bpy.data.materials.new(name=name)
     mat.use_nodes = True
     nodes = mat.node_tree.nodes
@@ -84,6 +97,15 @@ def create_material(name):
 
 
 def render_layers(clear, radius, layers):
+    """
+    Render the layers of read data variables on top of Earth with animated textures.
+    
+    :param clear: Clear the scene before rendering
+    :param radius: Height of layer plus radius of the Earth
+    :param layers: Dictionary with layer names and texture file paths
+    :return: None
+    """
+
     print("******************** render layers *******************")
 
     material, texture_node = create_material("Animated_Material")
@@ -91,16 +113,13 @@ def render_layers(clear, radius, layers):
     for n, step in enumerate(layers['t2m']):
         print("---> Step: ", step, " Frame: ", n*5)
         print("---> Texture file: ", layers['t2m'][step])
-
         frame = n*5
-
         texture_node.image = bpy.data.images.load(layers['t2m'][step])
         texture_node.image_user.frame_duration = 1
         texture_node.image_user.frame_start = frame
         texture_node.image_user.frame_offset = 0
         texture_node.image_user.use_auto_refresh = True
         texture_node.image_user.keyframe_insert("frame_offset", frame=frame)
-
 
     overlay = bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
     obj = bpy.context.view_layer.objects.active
