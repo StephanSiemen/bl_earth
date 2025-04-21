@@ -105,23 +105,37 @@ def render_layers(clear, radius, layers):
     :param layers: Dictionary with layer names and texture file paths
     :return: None
     """
+    variable_name = 't2m' #layers['options'][layers['variable']][0]
 
     print("******************** render layers *******************")
 
     material, texture_node = create_material("Animated_Material")
 
-    for n, step in enumerate(layers['t2m']):
-        print("---> Step: ", step, " Frame: ", n*5)
-        print("---> Texture file: ", layers['t2m'][step])
-        frame = n*5
-        texture_node.image = bpy.data.images.load(layers['t2m'][step])
+    for n, step in enumerate(layers[variable_name]):
+        frame = n * 5
+        texture_file = layers[variable_name][step]
+
+        print(f"---> Step: {step}, Frame: {frame}")
+        print(f"---> Texture file: {texture_file}")
+
+        try:
+            # Load the texture file
+            texture_node.image = bpy.data.images.load(texture_file)
+        except Exception as e:
+            print(f"Error loading texture file '{texture_file}': {e}")
+            continue
+
+        # Set texture properties for animation
         texture_node.image_user.frame_duration = 1
         texture_node.image_user.frame_start = frame
         texture_node.image_user.frame_offset = 0
         texture_node.image_user.use_auto_refresh = True
+
+        # Insert keyframes for texture properties
+        #texture_node.image_user.keyframe_insert("frame_start", frame=frame)
         texture_node.image_user.keyframe_insert("frame_offset", frame=frame)
 
-    overlay = bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
     obj = bpy.context.view_layer.objects.active
 
     # Assign it to object
