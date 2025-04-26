@@ -107,9 +107,16 @@ def render_layers(clear, radius, layers):
     """
     variable_name = 't2m' #layers['options'][layers['variable']][0]
 
+    var_cl = 0
+    try:
+        var_cl = bpy.data.collections['Layers']
+    except KeyError:
+        var_cl = bpy.data.collections.new("Layers")
+        bpy.context.scene.collection.children.link(var_cl)
+
     print("******************** render layers *******************")
 
-    material, texture_node = create_material("Animated_Material")
+    material, texture_node = create_material("Animated_Material_"+variable_name)
 
     for n, step in enumerate(layers[variable_name]):
         frame = n * 5
@@ -134,9 +141,15 @@ def render_layers(clear, radius, layers):
         # Insert keyframes for texture properties
         #texture_node.image_user.keyframe_insert("frame_start", frame=frame)
         texture_node.image_user.keyframe_insert("frame_offset", frame=frame)
+        #texture_node.image_user.keyframe_insert("frame_duration", frame=frame)
+        #texture_node.image_user.keyframe_insert("use_auto_refresh", frame=frame)
+        #texture_node.image_user.keyframe_insert("image", frame=frame)
 
     bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
     obj = bpy.context.view_layer.objects.active
+    var_cl.objects.link(bpy.context.active_object)
+    bpy.data.collections["Collection"].objects.unlink(bpy.context.active_object)
+    bpy.context.active_object.name = 'Layer '+variable_name
 
     # Assign it to object
     if obj.data.materials:
