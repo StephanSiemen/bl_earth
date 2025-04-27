@@ -35,7 +35,7 @@ def read_data(filename):
     for var_name, da in ds.data_vars.items():
        steps = dict()
        if 'step' in da.dims:
-            for time in da.step:
+            for i, time in enumerate(da.step):
                 # Extract hour values for steps (in nanoseconds)
                 fc_step = str((time.values / 3600000000000.).astype(int)).zfill(3)
                 data_slice = da.sel(step=time)
@@ -47,7 +47,7 @@ def read_data(filename):
                 data_slice.plot(cmap=plt.cm.coolwarm, add_colorbar=False)
 
                 # Save the plot
-                filename = f"/tmp/bl_earth_{var_name}_{fc_step}.png"
+                filename = f"/tmp/bl_earth_{var_name}_{i:04d}.png"
                 plt.savefig(filename, dpi=300, bbox_inches='tight',transparent=True, pad_inches=0)
                 
                 steps[fc_step] = filename
