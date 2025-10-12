@@ -2,8 +2,8 @@
 import bpy
 from bpy.props import StringProperty
 
-from bl_earth import operators
-from bl_earth import data
+from . import operators
+from . import data
 
 
 

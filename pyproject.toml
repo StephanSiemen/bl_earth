@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bl_earth"
+version = "0.1.0"
+description = "Blender extension to visualize global model data on a 3D globe"
+authors = [
+    {name = "Stephan Siemen", email = "stephan.siemen@ecmwf.int"}
+]
+license = {text = "Apache-2.0"}
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Multimedia :: Graphics :: 3D Modeling",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = [
+    "ecmwf-opendata",
+    "cfgrib",
+    "eccodes",
+    "findlibs", 
+    "numpy",
+    "pandas",
+    "pycodestyle",
+    "python-dateutil",
+    "matplotlib",
+    "requests",
+    "xarray",
+]
+
+[project.urls]
+Homepage = "https://github.com/StephanSiemen/bl_earth"
+Repository = "https://github.com/StephanSiemen/bl_earth"
+Issues = "https://github.com/StephanSiemen/bl_earth/issues"
+Documentation = "https://bl_earth.readthedocs.io/en/docs/"
+
+[tool.setuptools]
+packages = ["bl_earth"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+bl_earth = ["textures/**/*"]

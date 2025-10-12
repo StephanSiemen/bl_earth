@@ -16,20 +16,42 @@ Learn more about *bl_earth* in the official documentation at ... COMING SOON!
 Installation
 ------------
 
-To use **bl_earth** interactivly in the Blender UI you need to install the addon, through Edit > Preferences > Add-ons. To use it in batch mode, you only need to clone the GitHub repositry itself. Additionally some third-party Python packages need to be installed with the Blender Python interpretor. The latter is slightly more complicated, as you need to call the Python executable which comes with Blender. To do so you need to know where Blender is installed (depends on your operating system and Blender version). One way to find out is to call this command if you have blender in your PATH:
+**bl_earth** is now a Blender extension! There are several ways to install it:
 
+### Option 1: Install from Extension Platform (Recommended)
+1. Open Blender 4.2 or later
+2. Go to Edit > Preferences > Extensions
+3. Search for "bl_earth" and install directly
+
+### Option 2: Install from ZIP file
+1. Download the latest release from GitHub
+2. In Blender, go to Edit > Preferences > Extensions
+3. Click "Install from Disk" and select the ZIP file
+4. Enable the extension
+
+### Option 3: Install from Source
+Clone the repository and install dependencies:
+
+``` bash
+   git clone https://github.com/StephanSiemen/bl_earth
+   cd bl_earth
+```
+
+Find your Blender Python executable:
 ``` bash
    blender -b --python-expr "import sys; print(sys.executable)"
    export BLENDER_PYTHON=<output path from above>
 ```
 
-When you know where your python interpretor is located (here an example on MacOS) you can install Python community packgages with
-
+Install dependencies:
 ``` bash
-   git clone https://github.com/StephanSiemen/bl_earth
-   cd bl_earth
-   /Applications/Blender.app/Contents/Resources/4.3/python/bin/python3.11 -m pip install -r requirements.txt
+   $BLENDER_PYTHON install_dependencies.py
 ```
+
+Then in Blender:
+1. Go to Edit > Preferences > Extensions
+2. Click "Install from Disk" and navigate to the bl_earth directory
+3. Enable the extension
 
 Running bl_earth
 ----------------
@@ -38,13 +60,7 @@ Running bl_earth
 
   After installing and enabling the **bl_earth** add-on, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
 
-  If you checked out this repo and want to run it locally from code you should go to the git folder and set the path by setting 
-  ``` bash
-    export BLENDER_SYSTEM_SCRIPTS=$PWD
-  ```
-  After that you start up Blender and enable the addon under Edit - Preferences, searching for 'earth':
-  ![screenshot enabling the addon](docs/images/bl_earth_enable_addon.png)
-  When enabled you can find the **bl_earth** menu on the sidebar tyoing 'n' in the main window:
+  After installing the extension, you can find the **bl_earth** menu on the sidebar by pressing 'N' in the 3D viewport:
   ![screenshot on blearth menu](docs/images/bl_earth_menu.png)
 
 - **Command line and batch**
@@ -54,6 +70,26 @@ Running bl_earth
     blender --background --python bl_earth.py -noaudio -E 'CYCLES' -f 1 -F 'PNG' -- data/ecmwf_forecast.grib2 
   ```
   Where $BLENDER_PYTHON is pointing to the Python interpretor which comes with Blender (see above). To retrieve the example data set, run '$BLENDER_PYTHON retrieve_ecmwf_fc.py' in the 'data' folder.
+
+Development
+-----------
+
+### Building the Extension
+To create a distributable extension package:
+
+``` bash
+   python3 build_extension.py
+```
+
+This creates `dist/bl_earth-extension.zip` which can be installed in Blender.
+
+### Migration from Add-on to Extension
+This project has been migrated from a Blender add-on to a Blender extension. Key changes:
+
+- **Manifest**: Uses `blender_manifest.toml` instead of `bl_info`
+- **Structure**: Flattened directory structure (no more `addons/` subdirectory)
+- **Installation**: Installed via Extensions preference panel
+- **Dependencies**: Handled via separate installation script
 
 Contributing
 ------------

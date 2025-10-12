@@ -1,6 +1,6 @@
 import bpy
 import math
-from bl_earth import earth
+from . import earth
 
 
 # Function to add text 
@@ -107,7 +107,6 @@ def render_layers(clear, radius, layers):
     """
     variable_name = 't2m' #layers['options'][layers['variable']][0]
 
-    var_cl = 0
     try:
         var_cl = bpy.data.collections['Layers']
     except KeyError:
@@ -118,45 +117,44 @@ def render_layers(clear, radius, layers):
 
     material, texture_node = create_material("Animated_Material_"+variable_name)
 
-    for n, step in enumerate(layers[variable_name]):
-        frame = n * 5
-        texture_file = layers[variable_name][step]
+    texture_file = layers[variable_name]['000']
+    print(f"---> Texture file: {texture_file}")
 
-        print(f"---> Step: {step}, Frame: {frame}")
-        print(f"---> Texture file: {texture_file}")
+    try:
+        # Load the texture file
+        texture_node.image = bpy.data.images.load(texture_file)
+        texture_node.image.source = 'SEQUENCE'
+    except Exception as e:
+        print(f"Error loading texture file '{texture_file}': {e}")
+        return
 
-        try:
-            # Load the texture file
-            texture_node.image = bpy.data.images.load(texture_file)
-        except Exception as e:
-            print(f"Error loading texture file '{texture_file}': {e}")
-            continue
+    # Insert keyframes for texture properties
+    scene = bpy.context.scene
+    scene.frame_start = 1
+    scene.frame_end = len(layers[variable_name])
 
-        # Set texture properties for animation
-        texture_node.image_user.frame_duration = 1
-        texture_node.image_user.frame_start = frame
-        texture_node.image_user.frame_offset = 0
-        texture_node.image_user.use_auto_refresh = True
+    for frame in range(scene.frame_start, scene.frame_end + 1):
+        scene.frame_set(frame)
+        texture_node.image_user.frame_offset = frame - 1
+        texture_node.image_user.keyframe_insert(data_path="frame_offset", frame=frame)
 
-        # Insert keyframes for texture properties
-        #texture_node.image_user.keyframe_insert("frame_start", frame=frame)
-        texture_node.image_user.keyframe_insert("frame_offset", frame=frame)
-        #texture_node.image_user.keyframe_insert("frame_duration", frame=frame)
-        #texture_node.image_user.keyframe_insert("use_auto_refresh", frame=frame)
-        #texture_node.image_user.keyframe_insert("image", frame=frame)
-
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=180, ring_count=180, radius=radius)
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        segments=180, 
+        ring_count=180, 
+        radius=radius, 
+        location=(0, 0, 0), 
+        scale=(1, 1, 1)
+    )
     obj = bpy.context.view_layer.objects.active
-    var_cl.objects.link(bpy.context.active_object)
-    bpy.data.collections["Collection"].objects.unlink(bpy.context.active_object)
-    bpy.context.active_object.name = 'Layer '+variable_name
+    var_cl.objects.link(obj)
+    bpy.data.collections["Collection"].objects.unlink(obj)
+    obj.name = 'Layer ' + variable_name
 
-    # Assign it to object
     if obj.data.materials:
         obj.data.materials[0] = material
     else:
         obj.data.materials.append(material)
 
     # enable transparency for eevee
-    # bpy.context.object.active_material.blend_method  = 'BLEND'
-    # bpy.context.object.active_material.shadow_method = 'CLIP'
+    #bpy.context.object.active_material.blend_method  = 'BLEND'
+    #bpy.context.object.active_material.shadow_method = 'CLIP'

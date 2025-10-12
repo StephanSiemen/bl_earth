@@ -1,32 +1,22 @@
 
-bl_info = {
-    "name": "Blender Earth for model data",
-    "author": "Stephan Siemen",
-    "version": (0, 1),
-    "blender": (4, 0, 0),
-    "description": "Blender addon to create a globe and overlay model data on it for animation",
-    "location": "View3D",
-    "warning": "Early version",
-    "category": "Science",
-    "License": "Apache",
-    "doc_url": "https://bl_earh.readthedocs.io/en/docs/",
-    "tracker_url": "https://github.com/StephanSiemen/bl_earth/issues/",
-}
+# Blender Earth Extension for model data visualization
+# Extension metadata is now in blender_manifest.toml
 
-#import os
 import bpy
+import sys
+import site
 
-import sys, site
-
+# Ensure user site packages are available
 user_site_pkgs = site.getusersitepackages()
 if user_site_pkgs not in sys.path:
     sys.path.append(user_site_pkgs)
 
-from bl_earth import earth
-from bl_earth import panels
-from bl_earth import operators
-from bl_earth import render
-from bl_earth import data
+# Import modules from the extension directory
+from . import earth
+from . import panels
+from . import operators
+from . import render
+from . import data
 
 def register():
     bpy.utils.register_class(operators.OBJECT_OT_creator_earth)

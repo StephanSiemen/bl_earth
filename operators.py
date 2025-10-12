@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import bpy
 from bpy_extras.io_utils import ImportHelper
-from bl_earth import data
-from bl_earth import render
+from . import data
+from . import render
 
 class OBJECT_OT_creator_earth(bpy.types.Operator):
     """Create collections based on objects types"""
