@@ -94,7 +94,7 @@ This project has been migrated from a Blender add-on to a Blender extension. Key
 Contributing
 ------------
 
-All contributions, bug reports, bug fixes, documentation improvements, enhancements, and ideas are welcome. More information about contributing to bl_earth can be found at our [Contribution page](https://bl_earth.readthedocs.io/en/latest/contribute.html).
+All contributions, bug reports, bug fixes, documentation improvements, enhancements, and ideas are welcome. 
 
 Use Github to:
 - report bugs,

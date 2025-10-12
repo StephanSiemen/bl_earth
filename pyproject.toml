@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bl_earth"
-version = "0.1.0"
+version = "0.8.0"
 description = "Blender extension to visualize global model data on a 3D globe"
 authors = [
-    {name = "Stephan Siemen", email = "stephan.siemen@ecmwf.int"}
+    {name = "Stephan Siemen", email = "stephan.siemen@gmail.com"}
 ]
 license = {text = "Apache-2.0"}
 readme = "README.md"
@@ -40,7 +40,7 @@ dependencies = [
 Homepage = "https://github.com/StephanSiemen/bl_earth"
 Repository = "https://github.com/StephanSiemen/bl_earth"
 Issues = "https://github.com/StephanSiemen/bl_earth/issues"
-Documentation = "https://bl_earth.readthedocs.io/en/docs/"
+Documentation = "https://github.com/StephanSiemen/bl_earth"
 
 [tool.setuptools]
 packages = ["bl_earth"]

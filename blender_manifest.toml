@@ -4,7 +4,7 @@ id = "bl_earth"
 version = "0.8.0"
 name = "Blender Earth for model data"
 tagline = "Visualize global model data on a 3D globe"
-maintainer = "Stephan Siemen <stephan.siemen@gmail.int>"
+maintainer = "Stephan Siemen <stephan.siemen@gmail.com>"
 type = "add-on"
 
 tags = ["Science", "Visualization", "Animation", "3D View"]
