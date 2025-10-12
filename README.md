@@ -5,20 +5,20 @@ Blender add-on to overlay model data on the globe
 
 #### Why bl_earth?
 
-There have been many packages providing starting points to visualise model data in Blender. For example, BlenderNC already allowed the loading of NetCDF and GRIB data using xarray, but it still requires a bit of manual work. Also there are limited options to use the power of xarray and therfore a new approach was necessary ... 
+There have been many packages providing starting points to visualise model data in Blender. For example, BlenderNC already allowed the loading of NetCDF and GRIB data using xarray, but it still requires a bit of manual work. Thsi is a privaye project to explore more options to use the power of xarray and generally leearn the tools ... 
 
 
 Documentation
 -------------
 
-Learn more about *bl_earth* in the official documentation at ... COMING SOON!
+No *bl_earth* documentation yet. You are looking at what exist on this page! Not sure if it will ever come, as this is a private project for myself to learn Blender python scripting and working with GitHub copilot.
 
 Installation
 ------------
 
 **bl_earth** is now a Blender extension! There are several ways to install it:
 
-### Option 1: Install from Extension Platform (Recommended)
+### Option 1: Install from Extension Platform (COMING SOON)
 1. Open Blender 4.2 or later
 2. Go to Edit > Preferences > Extensions
 3. Search for "bl_earth" and install directly
