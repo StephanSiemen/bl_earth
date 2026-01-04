@@ -29,7 +29,7 @@ Installation
 3. Click "Install from Disk" and select the ZIP file
 4. Enable the extension
 
-### Option 3: Install from Source
+### Option 3: Install from Source and run from within VS Code
 Clone the repository and install dependencies:
 
 ``` bash
@@ -39,8 +39,7 @@ Clone the repository and install dependencies:
 
 Find your Blender Python executable:
 ``` bash
-   blender -b --python-expr "import sys; print(sys.executable)"
-   export BLENDER_PYTHON=<output path from above>
+   export BLENDER_PYTHON=$(blender -b -q --python-expr "import sys; print(sys.executable)" | sed -n 1p)
 ```
 
 Install dependencies:
@@ -48,17 +47,22 @@ Install dependencies:
    $BLENDER_PYTHON install_dependencies.py
 ```
 
-Then in Blender:
-1. Go to Edit > Preferences > Extensions
-2. Click "Install from Disk" and navigate to the bl_earth directory
-3. Enable the extension
+Then in VS Code:
+
+ - Make sure you have the ["Blender Development"](https://marketplace.visualstudio.com/items?itemName=JacquesLucke.blender-development) extension by Jaques Lucke installed
+
+ - Open folder wher you cloned this GitHub repositry
+ 
+ - Cmd+Shift+P and type/select "Blender: Start"
+
+ - You should find the extension installed and you can start typing "N" in Blender
 
 Running bl_earth
 ----------------
 
 - **Interactivly in Blender**
 
-  After installing and enabling the **bl_earth** add-on, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
+  After installing and enabling the **bl_earth** extension, go to the Layout workspace (should be default) and activate the side menu in the main 3D view Editor by pressing 'N'. You should see a tab called "Blender Earth". If not please, please restep the add-on installation.
 
   After installing the extension, you can find the **bl_earth** menu on the sidebar by pressing 'N' in the 3D viewport:
   ![screenshot on blearth menu](docs/images/bl_earth_menu.png)
@@ -83,13 +87,6 @@ To create a distributable extension package:
 
 This creates `dist/bl_earth-extension.zip` which can be installed in Blender.
 
-### Migration from Add-on to Extension
-This project has been migrated from a Blender add-on to a Blender extension. Key changes:
-
-- **Manifest**: Uses `blender_manifest.toml` instead of `bl_info`
-- **Structure**: Flattened directory structure (no more `addons/` subdirectory)
-- **Installation**: Installed via Extensions preference panel
-- **Dependencies**: Handled via separate installation script
 
 Contributing
 ------------
@@ -119,5 +116,6 @@ The used texture and topolgies orginate from NASA's Visible Earth and used accor
 #### Authors
 [@stephansiemen](https://github.com/stephansiemen)
 
+Disclaimer: This development was done using AI tools, especially GitHub Copilot.
 
 #### Contributors
