@@ -37,6 +37,8 @@ Clone the repository and install dependencies:
    cd bl_earth
 ```
 
+<!--
+
 Find your Blender Python executable:
 ``` bash
    export BLENDER_PYTHON=$(blender -b -q --python-expr "import sys; print(sys.executable)" | sed -n 1p)
@@ -46,7 +48,7 @@ Install dependencies:
 ``` bash
    $BLENDER_PYTHON install_dependencies.py
 ```
-
+-->
 Then in VS Code:
 
  - Make sure you have the ["Blender Development"](https://marketplace.visualstudio.com/items?itemName=JacquesLucke.blender-development) extension by Jaques Lucke installed
